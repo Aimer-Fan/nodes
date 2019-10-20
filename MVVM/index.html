@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>MVVM</title>
+</head>
+
+<body>
+  <div id="app">
+    <input type="text" v-model="school.name" />
+    <div>{{ school.name }}</div>
+    <div>{{ school.age }}</div>
+    {{ getNewName }}
+    <ul>
+      <li>1</li>
+      <li>2</li>
+    </ul>
+    <button v-on:click="change">update Name</button>
+    <div v-html="message"></div>
+  </div>
+  <!-- <script src="https://cdn.bootcss.com/vue/2.6.10/vue.js"></script> -->
+  <script src="./MVVM.js"></script>
+  <script>
+    let vm = new Vue({
+      el: '#app',
+      data: {
+        school: {
+          name: 'school',
+          age: 10
+        },
+        message: '<h1>233</h1>'
+      },
+      computed: {
+        getNewName() {
+          return this.school.name + 'New Name'
+        }
+      },
+      methods: {
+        change() {
+          this.school.name = '张三'
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

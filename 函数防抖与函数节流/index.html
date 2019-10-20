@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>函数防抖与函数节流</title>
+</head>
+<body>
+  <button id="btn_debounce">handleBtnDebounceClick</button>
+  <button id="btn_throttle">handleBtnThrottleClick</button>
+  <script src="./index.js"></script>
+  <script>
+    const btnDebounce = document.getElementById('btn_debounce')
+    btnDebounce.onclick = debounce(doSomethingDebounce, 1000)
+
+    const btnThrottle = document.getElementById('btn_throttle')
+    btnThrottle.onclick = throttle(doSomethingThrottle, 500)
+
+    function doSomethingDebounce () {
+      console.log('doSomethingDebounce()', this)
+    }
+    function doSomethingThrottle () {
+      console.log('doSomethingThrottle()', this)
+    }
+  </script>
+</body>
+</html>
