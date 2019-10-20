@@ -7,7 +7,8 @@
  *                      （类似于技能冷却）
  */
 
-
+// 防抖函数（定时器版）
+// 基本思想是 用定时器延迟fn函数的调用 在指定时间（wait）内再次调用会重置定时器
 function debounce(fn, wait) {
   var timer = null;
   return function () {
