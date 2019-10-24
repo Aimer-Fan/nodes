@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>css3纵向瀑布流</title>
+  <style type="text/css">
+    /*
+      css实现瀑布流 该方法有缺陷 （包裹区域中的内容会优先排满第一列之后才会排满第二列 以此类推）
+      主要使用css3的 column-count 属性来实现
+    */
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    .wrap {
+      width: 300px;
+      height: 600px;
+      border: 1px solid #000;
+      box-sizing: border-box;
+      margin: 0 auto;
+    }
+    /* 
+      这里是css瀑布流的核心代码
+     */
+    .masonry {
+      column-count: 2; /* 规定瀑布流的列数 */
+      column-gap: 0; /* 规定每一列的距离 不设置这个可以通过margin来设置边距 */
+    }
+    .wrap .item {
+      /*  这个是设置多列布局页面下的内容盒子如何中断，如果不加上这个，每列的头个元素就不会置顶 */
+      break-inside: avoid;
+    }
+    .wrap .item_small {
+      width: 150px;
+      height: 100px;
+      background: pink;
+    }
+    .wrap .item_middle {
+      width: 150px;
+      height: 150px;
+      background: deeppink;
+    }
+    .wrap .item_large {
+      width: 150px;
+      height: 300px;
+      background: skyblue;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap masonry">
+    <div class="item item_small">1</div>
+    <div class="item item_middle">2</div>
+    <div class="item item_large">3</div>
+    <div class="item item_middle">4</div>
+    <div class="item item_large">5</div>
+  </div>
+</body>
+</html>

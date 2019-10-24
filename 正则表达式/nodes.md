@@ -79,24 +79,39 @@ let reg2 = new RegExp('\\d+')
 
 ### 元字符详细解析
 
-```^ &```
++ ```^ &```
 
-```js
-let reg = /^\d/
-reg.test('2019abc') // => true
-reg.test('abc2019') // => false
-reg.test('abc') // => false
-```
+  ```js
+  let reg = /^\d/
+  reg.test('2019abc') // => true
+  reg.test('abc2019') // => false
+  reg.test('abc') // => false
+  ```
 
-```js
-let reg = /\d$/
-reg.test('2019abc') // => false
-reg.test('abc2019') // => true
-reg.test('abc') // => false
-```
+  ```js
+  let reg = /\d$/
+  reg.test('2019abc') // => false
+  reg.test('abc2019') // => true
+  reg.test('abc') // => false
+  ```
 
-```js
-// ^和$ 都不加表示：字符串中包含规则的内容即可
-// ^和$ 都加表示： 字符串只能是和规则一直的内容
-```
+  ```js
+  // ^和$ 都不加表示：字符串中包含规则的内容即可
+  // ^和$ 都加表示： 字符串只能是和规则一直的内容
+  ```
+
++ ```\```
+
+  ```js
+  // 这里的 . 代表的是除 \n 意外的任意字符
+  let reg = /^2.3$/
+  reg.test('2.3') // => true
+  reg.test('2@3') // => true
+  reg.test('23') // => false
+
+  // 使用转义字符，让其只能代表小数点
+  reg = /^2\.3$/
+  reg.test('2.3') // => true
+  reg.test('2@3') // => false
+  ```
 
