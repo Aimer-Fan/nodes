@@ -321,3 +321,153 @@ str.match(reg)		// => ["2", "0", "1", "9", "2", "0", "2", "0"]
 + (?=)正向预查
 + (?!)负向预查
 
+### 其它正则捕获的方法
+
+1. test也能捕获（本意是匹配）
+
+   ```js
+   let str = '{0}年{1}月{2}日'
+   let reg = /\{(\d+)\}/g
+   reg.test(str)				// => true
+   console.log(RegExc.$1)		// => '0'
+   
+   reg.test(str)				// => true
+   console.log(RegExc.$1)		// => '1'
+   
+   reg.test(str)				// => true
+   console.log(RegExc.$1)		// => '2'
+   
+   reg.test(str)				// => false
+   console.log(RegExc.$1)		// => '2'  存储的是上一次捕获的结果
+   
+   // RegExc.$1~Reg.$9			==> 获取当前本次正则匹配或后，第一个到第九个分组的信息
+   // 这种方法信息存储在全局里 不支持多个正则 如使用多个正则 这回覆盖当前的值
+   ```
+
+2. replace 字符串中实现替换的方法（一般都是伴随正则使用的）
+
+   ```js
+   let str = 'AimerFan@1998|AimerFan@2019'
+   // 把字符串 AimerFan 替换成 SNL
+   // replace方法在替换第一个出现的匹配项后会停止
+   str = str.replace('AimerFan', 'SNL')	// => SNL@1998|AimerFan@2019
+   
+   str = 'AimerFan@1998|AimerFan@2019'
+   str = str.replace(/AimerFan/g, 'SNL')	// => SNL@1998|SNL@2019
+   ```
+
+   有些情况不使用正则无法解决问题，例如：
+
+   ```js
+   let str = 'AimerFan@1998|AimerFan@2019'
+   // 把字符串 AimerFan 替换成 AimerFanNice
+   str = str.replace('AimerFan', 'AimerFanNice').replace('AimerFan', 'AimerFanNice')
+   // => AimerFanNiceNice@1998|AimerFan@2019
+   // replace方法每一次都是从字符串的第一个位置开始找的（类似与正则捕获的懒惰性）
+   
+   // 基于正则的全局模式 g 可以实现
+   str = 'AimerFan@1998|AimerFan@2019'
+   str = str.replace(/AimerFan/g, 'AimerFanNice')
+   // => AimerFanNice@1998AimerFanNice@2019
+   ```
+
+   示例：把时间字符串进行处理
+
+   ```js
+   let time = '1998-01-23'
+   // 变为 1998年01月23日
+   let reg = /^(\d{4})-(\d{2})-(\d{2})$/
+   time = time.replace(reg, '$1年$2月$3日')
+   console.log(time)	// => 1998年01月23日
+   
+   
+   // 等同于这样写 [str].replace([reg], [function])
+   
+   // 1. 首先拿reg和time进行匹配捕获，能匹配到几次就会把传递的函数执行几次（而且是匹配一次就执行一次）
+   // 2. 不仅把方法执行了。而且replace还给方法传递了实参信息（和exec捕获的内容一致的信息，正则匹配的内容，分组匹配的信息）
+   // 3. 在函数中我们返回的是什么，就把当前匹配的内容替换成什么
+   
+   /*
+   time = time.replace(reg, (result, $1, $2, $3) => {
+       // 这里的 $1~$3 是我们自己设置的变量
+   	console.log(result, $1, $2, $3)
+   })
+   */
+   time = time.replace(reg, (result, ...arg) => {
+       // 这里的 $1~$3 是我们自己设置的变量
+       let [$1, $2, $3] = arg
+       $2.length < 2 ? $2 = '0'+$2 : null
+       $3.length < 2 ? $3 = '0'+$3 : null
+       return $1+'年'+$2+'月'+$3+'日'
+   })
+   ```
+
+   示例：单词首字母大写
+
+   ```js
+   let str = 'good good study, day day up!'
+   let reg = /\b([a-zA-Z])[a-zA-Z]*\b/g
+   
+   // 函数或被执行六次，每一次都把正则匹配的信息传递给函数
+   // 每一次的args: ['good', 'g'] ['good', 'g'] ['study', 's'] ...
+   str = str.replace(reg, (...args) => {
+       let [content, $1] = args
+       $1 = $1.toUpperCase()
+       content = content.substring(1)
+       return $1 + content
+   })
+   ```
+
+   示例：验证一个字符串中哪个字幕出现的次数最多，多少次？
+
+   ```js
+   let str = 'AimerFan, whose realname is SNL'
+   
+   // 1. 去重方法
+   // 使用一个对象保存信息 key为每个字符 value为出现的次数
+   let obj = {};
+   [].forEach.call(str, char => {
+       if (typeof obj[char] !== 'undefined') {
+           obj[char]++;
+           return
+       }
+       obj[char] = 1
+   })
+   let max = 1
+   let res = []
+   for (let key in obj) {
+       let item = obj[key]
+       item > max ? max = item : null
+   }
+   for (let key in obj) {
+       let item = obj[key]
+       if (item === max) {
+           res.push(key)
+       }
+   }
+   console.log(`出现次数最多的字符：${res}，出现的次数${max}次`)
+   ```
+
+   ```js
+   let str = 'AimerFan, whose realname is SNL'
+   // 排序
+   str = str.split('').sort((a, b) => a.localeCompare(b)).join('')
+   // => "   aaaAeeeFiilLmmnnNrrsS"
+   let reg = /([a-zA-Z])\1+/ig
+   let array = str.match(reg) // => ["aaaA", "eee", "ii", "lL", "mm", "nnN", "rr", "sS"]
+   array.sort((a, b) => b.length - a.length)
+   
+   let max = array[0].length
+   let res = [array[0].substr(0, 1)]
+   for (let i = 1; i < array.lenrth; i++) {
+       let item = array[i]
+       if (item.length < max) {
+           break;
+       }
+       res.push(item.substr(0, 1))
+   }
+   console.log(`出现次数最多的字符：${res}，出现的次数${max}次`)
+   ```
+
+   
+
