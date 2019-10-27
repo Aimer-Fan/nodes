@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Flex居中</title>
+  <style type="text/css">
+    #wrap {
+      width: 400px;
+      height: 300px;
+      border: 1px solid #000;
+      display: flex; /*设置容器的布局方式为Flex布局*/
+      flex-direction: row; /*设置主轴的方向为横轴*/
+      justify-content: center; /*设置元素在横轴上的对齐方式*/
+      align-items: center; /*设置元素在纵轴上的对齐方式*/
+    }
+    .content{
+      width: 200px;
+      height: 150px;
+      background-color: pink;
+    }
+  </style>
+</head>
+<body>
+  <div id="wrap">
+    <div class="content"></div>
+  </div>
+</body>
+</html>

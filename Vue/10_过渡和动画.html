@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			.fade-enter-active, .fade-leave-active {
+			  transition: opacity .5s;
+			}
+			.fade-enter, .fade-leave-to  {
+			  opacity: 0;
+			}
+			.slide-fade-enter-active {
+			  transition: all .3s ease;
+			}
+			.slide-fade-leave-active {
+			  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+			}
+			.slide-fade-enter, .slide-fade-leave-to {
+			  transform: translateX(10px);
+			  opacity: 0;
+			}
+			
+			.bounce-enter-active {
+			  animation: bounce-in .5s;
+			}
+			.bounce-leave-active {
+			  animation: bounce-in .5s reverse;
+			}
+			@keyframes bounce-in {
+			  0% {
+			    transform: scale(0);
+			  }
+			  50% {
+			    transform: scale(1.5);
+			  }
+			  100% {
+			    transform: scale(1);
+			  }
+			}
+			
+		</style>
+	</head>
+	<body>
+		<!--Vue不生产动画 Vue只是动画的搬运工
+		Vue通过给组件添加相应的类来实现css动画（transition和animation）这些类要自己重写
+		
+		1.用<transition name="XXX">需要动画的组件包裹起来
+		2.定义class样式（格式为	.XXX-enter）
+			
+		
+		动画的生命周期为
+		
+		开始					运行						结束
+		v-enter 	====> 	v-enter-active 	====> 	v-enter-to
+		v-leave 	====> 	v-leave-active 	====> 	v-leave-to
+		
+		-->
+		<div id="demo">
+		  <button v-on:click="show = !show">
+		    Toggle
+		  </button>
+		  <transition name="fade">
+		    <p v-if="show">hello</p>
+		  </transition>
+		</div>
+		
+		<div id="example-1">
+		  <button @click="show = !show">
+		    Toggle render
+		  </button>
+		  <transition name="slide-fade">
+		    <p v-if="show">hello</p>
+		  </transition>
+		</div>
+		
+		<div id="example-2">
+		  <button @click="show = !show">Toggle show</button>
+		  <transition name="bounce">
+		    <p v-if="show" style="display: block;text-align: center; font-size: 30px;">This is a test text</p>
+		  </transition>
+		</div>
+		
+		<script src="js/Vue.js"></script>
+		<script type="text/javascript">
+			new Vue({
+			  el: '#demo',
+			  data: {
+			    show: true
+			  }
+			})
+			
+			new Vue({
+			  el: '#example-1',
+			  data: {
+			    show: true
+			  }
+			})
+			
+			new Vue({
+			  el: '#example-2',
+			  data: {
+			    show: true
+			  }
+			})
+		</script>
+	</body>
+</html>

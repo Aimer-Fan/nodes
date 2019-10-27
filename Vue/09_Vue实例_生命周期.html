@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<!--1.vue对象的生命周期
+			1).初始化显示
+				*beforeCreate()
+				*created()
+				*beforeMount()
+				*mounted(0)
+			2).更新状态
+				*beforeUpdate()
+				*updated()
+			3).销毁vue实例： vm.$destory()
+				*beforeDestroy()
+				*destroyed()
+		2.常用的生命周期方法
+			created()/mounted(): 发送ajax请求，启动定时器等异步任务
+			beforeDestroy(): 做收尾工作，如清除定时器-->
+		
+		<div id="demo">
+			<p v-show="isShow">{{msg}}</p>
+			<button @click="destroyVM">destroy vm</button>
+		</div>
+		
+		<script src="js/Vue.js"></script>
+		<script type="text/javascript">
+			new Vue({
+				el:'#demo',
+				
+				data:{
+					msg:'hello world',
+					isShow:true,
+				},
+				
+				methods:{
+					destroyVM(){
+						//删除VM
+						// vm.$destroy() 方法将指定的Vue实例销毁,而Vue所管理的Dom节点并未消失
+						this.$destroy()
+					}
+				},
+				
+				mounted(){//初始化之后会立即调用
+					//箭头函数  用来定义匿名函数 特点是没有自己的this 这里的this是外部的this
+					this.timer = setInterval(  () => {
+						console.log('------')
+						this.isShow = !this.isShow
+					},1000)
+				},
+				
+				
+				
+				//此回调函数会在Vue实例销毁之前调用
+				beforeDestroy(){
+					//清除定时器
+					//如果不调用此回调函数 将会使定时器一直调用 内存泄露！！！！
+					clearInterval(this.timer)
+				}
+			
+			})
+			
+		</script>
+	</body>
+</html>

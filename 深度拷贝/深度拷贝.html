@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>DEMO</title>
+</head>
+<body>
+  <script type="text/javascript">
+    /*
+    * js对象的深拷贝
+    *
+    *
+    * 注意： Object.assign(prop) 和 ...object 都是浅拷贝即只会拷贝对象的一层属性，
+    *       如果遇到数组或对象等引用类型，那么复制的是这个数据的地址，没有把数据本身复制过来。
+    * */
+    const obj1 = {
+        name: 'kobe',
+        age: 35,
+        cars: ['bmw', 'lincon']
+    }
+    // const obj2 = { ...obj1}
+    // const obj2 = Object.assign({}, obj1)
+    const obj2 = deepClone(obj1)
+
+    obj1.name = 'test'
+    obj1.cars.push('haha')
+
+    console.log('obj1', obj1)
+    console.log('obj2', obj2)
+
+    /*
+    * 深度拷贝函数，通过递归遍历复制对象的属性实现深度拷贝
+    * */
+    function deepClone(data){
+        // 如果当前的data是基本数据类型就不做处理返回
+        if(!data || !(data instanceof Object) || (typeof data=="function"))
+        {
+            return data||undefined;
+        }
+        // 当前的data是对象
+        var constructor = data.constructor;
+        // 在这里分配新的内存空间
+        var result = new constructor();
+        for(var key in data){
+            // obj.hasOwnProperty(prop) 方法会返回一个布尔值，指示对象自身属性中是否具有指定的属性（也就是是否有指定的键）
+            if(data.hasOwnProperty(key)){
+                result[key]=deepClone(data[key]);
+            }
+        }
+        return result;
+    }
+  </script>
+</body>
+</html>

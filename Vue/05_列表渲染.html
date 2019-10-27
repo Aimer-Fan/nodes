@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	
+	<!--
+		用 v-for 把一个数组对应为一组元素
+		我们用 v-for 指令根据一组数组的选项列表进行渲染。
+		v-for 指令需要使用 item in items 形式的特殊语法，
+		items 是源数据数组并且 item 是数组元素迭代的别名。
+	-->
+	
+	
+	<body>
+		<div id="demo">
+			<h2>测试：v-for遍历数组</h2>
+			<ul>
+				<li v-for="(p,index) in persions" :key="index">
+					{{index}}*****{{p.name}}*****{{p.age}}*****
+					<button @click="deleteP(index)">删除</button>
+					<button @click="updateP(index,{name:'Cat',age:18})">更新</button>
+				</li>
+			</ul>
+			
+			<h2>测试：v-for遍历对象</h2>
+			<ul>
+				<li v-for="(value,name) in persions[1]" :key="name">
+					{{value}}*****{{name}}
+				</li>
+			</ul>
+		</div>
+		
+		<script src="js/Vue.js"></script>
+		<script type="text/javascript">
+			new Vue({
+				el:'#demo',
+				data:{
+					persions:[
+						{name:'Tom',age:16},
+						{name:'Jack',age:17},
+						{name:'Bob',age:18},
+						{name:'Jane',age:19}
+					]
+				},
+				methods:{
+					deleteP(index){
+						this.persions.splice(index,1)
+					},
+					
+//					Vue 包含一组观察数组的变异方法，所以它们也将会触发视图更新。这些方法如下：
+//
+//					push()
+//					pop()
+//					shift()
+//					unshift()
+//					splice()
+//					sort()
+//					reverse()
+					
+					updateP(index,newP){
+						
+						//该方式并没有改变persions数组所以不会引起视图的更新
+//						this.persions[index] = newP
+						
+						this.persions.splice(index,1,newP)
+					}
+				}
+				
+			})
+		</script>
+	</body>
+</html>

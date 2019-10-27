@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<div id="demo">
+			<input type="text" v-model="searchName" />
+			<ul>
+				<li v-for="(p,index) in filterPersion" :key="index">
+					{{index}}---{{p.name}}---{{p.age}}
+				</li>
+			</ul>
+			<button @click="setOrderType(1)">年龄升序</button>
+			<button @click="setOrderType(2)">年龄降序</button>
+			<button @click="setOrderType(0)">原本顺序</button>
+		</div>
+		
+		
+		<script src="js/Vue.js"></script>
+		<script type="text/javascript">
+			new Vue({
+				el:'#demo',
+				data:{
+					searchName:'',
+					orderType: 0,//0代表原本，1代表升序，2代表降序
+					persions:[
+						{name:'Tom',age:16},
+						{name:'Jack',age:17},
+						{name:'Bob',age:18},
+						{name:'Jane',age:19}
+					]
+					
+				},
+				computed:{
+					
+					
+					filterPersion(){
+						//取出相关的数据
+						const {searchName,persions,orderType} = this
+						//最终需要显示的数据
+						let fPersions
+						//对persions进行过滤
+						fPersions =  persions.filter(p => p.name.indexOf(searchName)!=-1)
+						
+						//排序
+						if(orderType!=0){
+							fPersions.sort(function(p1,p2){//如果返回负数p1在前，如果返回正数p2在前
+								//1代表升序，2代表降序
+								if(orderType==2){
+									return p2.age-p1.age
+								}else{
+									return p1.age-p2.age 
+								}
+								
+							})
+						}
+						return fPersions
+					}
+					
+				},
+				methods:{
+					setOrderType(value){
+						this.orderType = value
+					}
+				}
+			})
+		</script>
+	</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Position居中</title>
+  <style type="text/css">
+    #wrap{
+      width: 400px;
+      height: 300px;
+      border: 1px solid #000;
+      position: relative; /*设置父级元素为相对定位*/
+    }
+    .content{
+      width: 200px;
+      height: 150px;
+      background-color: pink;
+      position: absolute; /*设置子元素为绝对定位*/
+      top: 0; /*设置四边的距离为0*/
+      right: 0;
+      bottom: 0;
+      left: 0;
+      margin: auto; /*设置margin为auto*/
+    }
+  </style>
+</head>
+<body>
+  <div id="wrap">
+    <div class="content"></div>
+  </div>
+</body>
+</html>

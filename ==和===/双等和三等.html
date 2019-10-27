@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <!-- 
+    == 和 === 的区别
+
+      ==  在判断是否相等时会先做类型转换 (equality 等同)
+      === 在判断是否相等时不会做类型转换 (identity 恒等)
+  -->
+<script type="text/javascript">
+  const a = '1'
+  const b = 1
+
+  console.log(a == b) // true
+  console.log(a === b) // false
+
+</script>
+</body>
+</html>

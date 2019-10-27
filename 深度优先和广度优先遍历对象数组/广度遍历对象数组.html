@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    /*
+    * 深度优先搜索
+    * 做法就是依次将当前节点
+    */
+    function bfs(node) {
+      // debugger
+      // 准备一个队列用来存放当前要访问的节点队列
+      const nodeList = []
+      // 1.将当前的节点放到队列中
+      if(node instanceof Array) {
+        node.forEach(item => {
+          nodeList.push(item)
+        })
+      } else {
+        nodeList.push(node)
+      }
+      // 从前往后遍历当前队列
+      while(nodeList) {
+        // 2. 将当前节点弹出
+        let currentNode = nodeList.shift()
+        if (currentNode) { // 如果当前节点存在
+          // 3. 访问当前节点
+          console.log(currentNode)
+          // 4. 将当前节点的子节点排到队列中
+          const childrenNode = currentNode.children
+          if(childrenNode) {
+            for(let i = 0; i < childrenNode.length; i++) {
+              nodeList.push(childrenNode[i])
+            }
+          }
+        } else {
+          return
+        }
+      }
+    }
+
+    const obj = [{
+          label: '一级 1',
+          children: [{
+            label: '二级 1-1',
+            children: [{
+              label: '三级 1-1-1'
+            }]
+          }]
+        }, {
+          label: '一级 2',
+          children: [{
+            label: '二级 2-1',
+            children: [{
+              label: '三级 2-1-1'
+            }]
+          }, {
+            label: '二级 2-2',
+            children: [{
+              label: '三级 2-2-1'
+            }]
+          }]
+        }, {
+          label: '一级 3',
+          children: [{
+            label: '二级 3-1',
+            children: [{
+              label: '三级 3-1-1'
+            }]
+          }, {
+            label: '二级 3-2',
+            children: [{
+              label: '三级 3-2-1'
+            }]
+          }]
+        }]
+
+    bfs(obj)
+  </script>
+</body>
+</html>
