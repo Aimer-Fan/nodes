@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>splice</title>
+</head>
+
+<body>
+  <script type="text/javascript">
+    let arr = [12, 1, 12, 3, 1, 88, 66, 9, 66]
+    function unique(array) {
+      for (let i = 0; i < array.length; i++) {
+        for (j = i + 1; j < array.length; j++) {
+          if (array[i] === array[j]) {
+            array.splice(j, 1)
+            j--
+          }
+        }
+      }
+      return array
+    }
+    arr = unique(arr)
+    console.log(arr)
+
+  </script>
+</body>
+
+</html>

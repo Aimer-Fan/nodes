@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>includes</title>
+</head>
+
+<body>
+  <script type="text/javascript">
+    let array = [12, 1, 12, 3, 1, 88, 66, 9, 66]
+    function unique(array) {
+      let newArray = []
+      let len = array.length
+      for (let i = 0; i < len; i++) {
+        let cur = array[i]
+        if (!newArray.includes(cur)) {
+          newArray.push(cur)
+        }
+      }
+      return newArray
+    }
+    array = unique(array)
+    console.log(array)
+  </script>
+</body>
+
+</html>
