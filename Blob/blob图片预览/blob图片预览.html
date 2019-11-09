@@ -18,6 +18,7 @@
 
     upload.onchange = function() {
       const file = upload.files[0]
+      debugger
       const src = URL.createObjectURL(file)
 
       preview.src = src
