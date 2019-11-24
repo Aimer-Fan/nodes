@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>对象属性名不能重复</title>
+</head>
+
+<body>
+  <script type="text/javascript">
+    let array = [12, 1, 12, 3, 1, 88, 66, 9, 66]
+    function unique(array) {
+      let obj = {}
+      for (let i = 0; i < array.length; i++) {
+        let cur = array[i]
+        if (obj[cur]) {
+          //array.splice(i,1) // 导致数组塌陷
+          array[i] = array[array.length - 1]
+          array.length--// 删除最后一项
+          i--
+          continue
+        }
+        obj[cur] = cur // 给obj新增键值对；属性名和属性值是一样的
+      }
+    }
+    unique(array)
+    console.log(array)
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>hasOwnProperty</title>
+</head>
+
+<body>
+  <script type="text/javascript">
+    let array = [12, 1, 12, 3, 1, 88, 66, 9, 66]
+    function unique(array) {
+      let obj = {}
+      return array.filter(function (item, index, a) {
+        // item : 数组每一个成员
+        // index: 成员对应的索引
+        // a : 整个数组
+        // hasOwnProperty来校验的该属性是否出现过；
+        return obj.hasOwnProperty(typeof item + item) ? false : obj[typeof item + item] = true
+        if (obj.hasOwnProperty(typeof item + item)) {
+          return false
+        } else {
+          obj[typeof item + item] = true
+          return true
+        }
+      })
+    }
+    array = unique(array)
+    console.log(array)
+  </script>
+</body>
+
+</html>

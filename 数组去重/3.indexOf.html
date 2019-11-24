@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>indexOf</title>
+</head>
+
+<body>
+  <script type="text/javascript">
+    let arr = [12, 1, 12, 3, 1, 88, 66, 9, 66]
+    function unique(array) {
+      let newarray = []
+      for (let i = 0; i < array.length; i++) {
+        let current = array[i]
+        if (newarray.indexOf(current) === -1) {
+          newarray.push(current)
+        }
+      }
+      return newarray
+    }
+    arr = unique(arr)
+    console.log(arr)
+  </script>
+</body>
+
+</html>
