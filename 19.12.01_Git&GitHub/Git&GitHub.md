@@ -129,3 +129,101 @@ Git在本地有工作区、暂存区、本地库。
    ​		就近原则：项目级别优先于系统用户级别，二者都有时采用项目级别的签名。
 
    ​		二者都没有不允许
+   
+3. 基本操作
+
+   1. 状态查看操作
+
+      git status
+
+      查看工作区、暂存区状态
+
+   2. 添加操作
+
+      git add [filename]
+
+      将工作区的“新建/修改”添加到暂存区
+
+   3. 提交操作
+
+      git commit -m "comment message" [filename]
+
+      将暂存区的内容提交到本地库
+
+   4. 查看历史记录操作
+
+      1. git log
+
+         ![1575266165152](./img/gitlog.png)
+
+      多屏显示控制方式：空格向下翻页；b 向上翻页；q 退出
+
+      2. git log --pretty=online
+
+         ![1575266229143](./img/prettyonline.png)
+
+      3. git log --oneline
+
+         ![1575266333096](./img/oneline.png)
+
+      4. git reflog
+
+         ​	![1575266435792](./img/reflog.png)
+
+         HEAD@{移动到当前版本需要多少步}
+
+   5. 前进后退
+
+      本质：操作git的HEAD指针指向
+
+      基于索引值操作【推荐】
+
+      ​	git reset --hard 局部索引值
+
+      使用^符号：只能往后退
+
+      ​	git reset --hard HEAD^（有几个^代表后退几步）
+
+      使用~符号：只能往后退
+
+      ​	git reset --hard HEAD~1
+
+   6. reset命令的三个参数对比
+
+      1. --soft：仅仅在本地库移动HEAD指针
+      2. --mixed：在本地库移动HEAD指针；重置暂存区；
+      3. --hard：在本地库移动HEAD指针；重置暂存区；重置工作区；
+
+   7. 删除文件并找回
+
+      1. 前提：删除前，文件存在时的状态提交到了本地库。
+      2. 操作：git reset --hard [hash]
+
+   8. 比较文件差异
+
+      git diff [文件名]：将工作区中的文件和暂存区进行比较
+
+      git diff [本地库历史版本] [文件名]：将工作区中的文件和本地库历史记录比较
+
+      不带文件名比较多个文件
+
+4. 分支操作
+
+   创建分支：git branch [分支名]
+
+   查看分支：git branch -v
+
+   切换分支：git checkout [分支名]
+
+   合并分支：
+
+   1. 切换到接受修改的分支（被合并，增加新内容）上：git checkout [被合并的分支名]
+   
+ 	2. 执行merge命令：git merge [有新内容的分支名]
+   
+解决冲突
+   
+   1. 编辑文件删除特殊符号
+   2. 修改文件至满意程度
+   3. git add [文件名]
+   4. git commit -m “日志信息”
