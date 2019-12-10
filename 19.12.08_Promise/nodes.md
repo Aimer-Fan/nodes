@@ -57,5 +57,52 @@
 
 ## 3. 如何使用Promise?
 
+### 3.1 API
 
+1. Promise 构造函数：Promise(excutor) {}
+
+   1. excutor函数：同步执行 (resolve, reject) => {}
+   2. resolve函数：内部定义成功时我们调用的函数 value => {}
+   3. reject函数：内部定义失败时我们调用的函数 reason => {}
+
+   说明：excutor会在Promise内部立即同步回调，异步操作再执行器中执行
+
+2. Promise.prototype.then 方法: (onResolved, onRejected) => {}
+
+   1. onResolved函数：成功的回调函数 (value) => {}
+   2. onRejected函数：失败的回调函数 (reason) => {}
+
+   说明：指定用于得到成功value的成功回调和用于得到失败reason的失败回调
+
+​       返回一个新的promise对象
+
+3. Promise.prototype.catch 方法：(onRejected) => {}
+   1. onRejected函数：失败的回调函数 (reason) => {}
+
+   说明：then()的语法糖，相当于：then(undefined, onRejected)
+
+4. Promise.resolve 方法：(value) => {}
+
+   1. value：成功的数据或promise对象
+
+   说明：返回一个成功/失败的promise对象
+
+5. Promise.reject 方法：(reason) => {}
+   1. reason：失败的原因
+
+​        说明：返回一个失败的promise对象
+
+6. Promise.all 方法：(pormises) => {}
+
+   1. pormises：包含n个promise的数组
+
+   说明：返回一个新的promise，只有所有的promise都成功才成功，只要有一个失败了就直接失败
+
+7. Promise.race 方法：(pormises) => {}
+
+   1. pormises：包含n个promise的数组
+
+   说明：返回一个新的promise，第一个完成的promise的结果就是最终的结果状态
+
+### 3.2 promise的几个关键问题
 
