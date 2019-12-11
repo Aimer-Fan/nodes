@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>12_自定义Promise.html</title>
+</head>
+<body>
+  <script src="./lib/Promise.js"></script>
+  <script type="text/javascript">
+    const p = new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve(1)
+      })
+    })
+    p.then(
+      value => { console.log('onResolved1', value) },
+      reason => { console.log('onRejected1', reason) }
+    )
+    p.then(
+      value => { console.log('onResolved2', value) },
+      reason => { console.log('onRejected2', reason) }
+    )
+  </script>
+</body>
+</html>

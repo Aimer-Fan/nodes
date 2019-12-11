@@ -88,6 +88,7 @@
    说明：返回一个成功/失败的promise对象
 
 5. Promise.reject 方法：(reason) => {}
+   
    1. reason：失败的原因
 
 ​        说明：返回一个失败的promise对象
@@ -105,4 +106,43 @@
    说明：返回一个新的promise，第一个完成的promise的结果就是最终的结果状态
 
 ### 3.2 promise的几个关键问题
+
+1. 如何改变promise的状态？
+
+   1. resolve(value)：如果当前是pending就会变成resolved
+   2. reject(reason)：如果当前是pending就会变成rejected
+   3. 抛出异常：如果当前是pending就会变成rejected
+
+2. 一个promise指定多个成功/失败回调函数，都会调用吗？
+
+   当promise改变对应状态时都会调用
+
+3. 改变promise状态和指定回调函数谁先谁后？
+   1. 都有可能，正常情况下时先制定回调在改变状态，但也可能先改变状态在指定回调
+   2. 如何先改变状态再指定回调？
+      1. 在执行器中直接调用resolve()/reject()
+      2. 延迟更长时间才调用then()
+   3. 什么时候才能得到数据？
+      1. 如果先指定的回调，那当状态发改变时，回调函数就会调用，得到数据
+      2. 如果先改变状态的话，那当指定回调时，回调函数就会调用，得到数据
+
+4. promise.then()返回的新promise的结果状态由什么决定？
+   1. 简单表达：由then()指定的回调函数执行的结果决定
+   2. 详细表达：
+      1. 如果抛出异常，新promise变为rejected，reason为抛出的异常
+      2. 如果返回的是非promise的任意值，新的promise变为resolved，value为返回的值
+      3. 如果返回的是另一个新promise，此promise的结果就会成为新promise的结果
+5. promise如何串联多个操作任务？
+   1. promise的then()返回一个新的promise，可以开成then()的链式调用
+   2. 通过then的链式调用串联多个同步/异步任务
+6. promise异常穿透？
+   1. 当使用promise的then链式调用时，可以在最后指定失败的回调
+   2. 前面任何操作处理异常，都会传到最后失败的回调中处理
+7. 中断promise链？
+   1. 当使用promise的then链式调用时，在中间中断，不在调用后面的回调函数
+   2. 办法：在回调函数中返回一个pending状态的promise
+
+## 2. 自定义（手写）Promise
+
+
 
