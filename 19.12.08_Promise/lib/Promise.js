@@ -146,7 +146,15 @@
    * @returns {Promise} 返回一个指定结果的成功的promise
    */
   Promise.resolve = function (value) {
-
+    return new Promise((resolve, reject) => {
+      // value 是promise
+      if (value instanceof Promise) {
+        value.then(resolve, reject)
+      } else {
+        // value不是promise
+        resolve(value)
+      }
+    })
   }
 
   /**
@@ -155,7 +163,9 @@
    * @returns {Promise} 返回一个指定结果的失败的promise
    */
   Promise.reject = function (reason) {
-
+    return new Promise((resolve, reject) => {
+      reject(reason)
+    })
   }
 
   /**
