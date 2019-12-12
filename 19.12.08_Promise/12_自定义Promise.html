@@ -11,16 +11,29 @@
   <script type="text/javascript">
     const p = new Promise((resolve, reject) => {
       setTimeout(() => {
-        resolve(1)
+        // resolve(1)
+        // debugger
+        reject(3)
       })
     })
     p.then(
       value => { console.log('onResolved1', value) },
-      reason => { console.log('onRejected1', reason) }
-    )
-    p.then(
+      reason => { console.log('onRejected1', reason); throw 4 }
+    ).then(
       value => { console.log('onResolved2', value) },
-      reason => { console.log('onRejected2', reason) }
+      reason => { console.log('onRejected2', reason); throw 5; }
+    ).then(
+      value => { console.log('onResolved3', value) },
+      reason => { console.log('onRejected3', reason); return 6; }
+    ).then(
+      value => {
+        console.log('onResolved4', value)
+        return new Promise(() => {}) // 中断promise链
+      },
+      reason => { console.log('onRejected4', reason) }
+    ).then(
+      value => { console.log('onResolved5', value) },
+      reason => { console.log('onRejected5', reason) }
     )
   </script>
 </body>
