@@ -141,8 +141,3 @@
 7. 中断promise链？
    1. 当使用promise的then链式调用时，在中间中断，不在调用后面的回调函数
    2. 办法：在回调函数中返回一个pending状态的promise
-
-## 2. 自定义（手写）Promise
-
-
-

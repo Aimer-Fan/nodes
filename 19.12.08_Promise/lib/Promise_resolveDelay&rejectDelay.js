@@ -220,6 +220,38 @@
     })
   }
 
+  /**
+   * @description 返回一个promise对象，在指定的时间后才确定结果
+   * @param {any} value 成功的值
+   * @param {Number} time 延迟时间
+   * @returns {Promise}
+   */
+  Promise.resolveDelay = function (value, time) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (value instanceof Promise) {
+          value.then(resolve, reject)
+        } else {
+          resolve(value)
+        }
+      }, time)
+    })
+  }
+
+  /**
+   * @description 返回一个promise对象，在指定的时间后才失败
+   * @param {any} reason 错误原因
+   * @param {Number} time 延迟时间
+   * @returns {Promise}
+   */
+  Promise.rejectDelay = function (reason, time) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        reject(reason)
+      }, time)
+    })
+  }
+
 
   // 向外暴露Promise函数
   window.Promise = Promise
