@@ -68,3 +68,82 @@
    2. 一个请求路径值对应一个操作
    3. 一般只有GET/POST
 
+### 1.8 使用 json-server 搭建REST API
+
+https://github.com/typicode/json-server
+
+## 2. XHR的理解和使用
+
+https://developer.mozilla.org/zh-CN/docs/Web/API/XMLHttpRequest
+
+1. 区别一般http请求与ajax请求
+
+   1. ajax请求是一种特别的http请求
+   2. 对服务器端来说，没有任何区别，区别在于浏览器端
+   3. 浏览器端发送请求：只有XHR或fetch发出的才是ajax请求，其它所有的都是非ajax请求
+   4. 浏览器端接收到响应
+      1. 一般请求：浏览器一般会直接显示响应体数据，也就是我们常说的刷新/跳转页面
+      2. ajax请求：浏览器不会对界面进行任何更新操作，只是调用监视的回调函数并传入响应相关数据
+
+2. API
+
+   1. XMLHttpRequest()：创建XHR对象的构造函数
+
+   2. status：响应状态码值，比如200，404
+
+   3. statusText：响应状态文本
+
+   4. readyState：标记请求状态的制度属性
+
+      0：初始
+
+      1：open()之后
+
+      2：send()之后
+
+      3：请求中
+
+   5. onreadystatechange：绑定readyState改变的监听
+
+   6. responseType：指定响应数据类型，如果是 json，得到响应后自动解析响应体数据
+
+   7. response：响应体数据，类型取决于responseType的指定
+
+   8. timeout：指定请求超时时间，默认为0代表没有限制
+
+   9. ontimeout：绑定超时的监听\
+
+   10. onerror：绑定请求网络错误的监听
+
+   11. open()：初始化一个请求，参数为:(method. url[, async])
+
+   12. send(data)：发送请求
+
+   13. abort()：终端请求
+
+   14. getResponseHeader(name)：获取指定名称的响应头值
+
+   15. getAllResponseHeaders()：获取所有响应头组成的字符串
+
+   16. setRequestHeader(name, value)：设置请求头
+
+## 3. axios的理解和使用
+
+1. axios是什么？
+   1. 前端最流行的ajax请求库
+   2. react/vue官方都推荐使用axios
+
+2. axios特点
+
+   1. 基于promise的异步编程ajax请求库
+   2. 浏览器端/node端都可以使用
+   3. 支持请求/响应拦截器
+   4. 支持/响应数据转换
+   5. 批量发送多个请求
+
+3. axios常用语法
+
+   1. axios(config)：通用/最本质的发任意类型请求的发送
+
+   
+
