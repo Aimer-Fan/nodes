@@ -144,6 +144,79 @@ https://developer.mozilla.org/zh-CN/docs/Web/API/XMLHttpRequest
 3. axios常用语法
 
    1. axios(config)：通用/最本质的发任意类型请求的发送
+   2. axios(url[, config])：可以只指定url发get请求
+   3. axios.request(config)：等同于axios(config)
+   4. axios.get(url[, config])：发get请求
+   5. axios.delete(url[, config])：发delete请求
+   6. axios.post(url[, data, config])：发post请求
+   7. axios.put(url[, data, config])：发put请求
+   8. axios.defaults.xxx：请求的默认全局配置
+   9. axios.interceptor.request.use()：添加请求拦截器
+   10. axios.interceptor.response.use()：添加相应拦截器
+   11. axois.create([config])：创建一个新的axios（它没有下面的功能）
+   12. axios.Cancel()：用于创建取消请求的错误对象
+   13. axios.CancelToken()：用于创建取消请求的token对象
+   14. axios.isCancel()：是否是一个取消请求的错误
+   15. axios.all(promises)：用于批量执行多个异步请求
 
+### 4. axois 源码分析
+
+1. axios和Axios的关系？
+   1. 从语法上来说：axios不是Axios的实例
+   2. 从功能上来说：axios时Axios的实例
+   3. axios时Axios.prototype.request函数的bind返回的函数
+   4. axios作为对象有Axios原型对象上的所有方法，有Axios对象上所有的属性
+2. instance与axios的区别？
+   1. 相同：
+      1. 都是一个能发任意请求的函数：request(config)
+      2. 都有发特定请求的各种方法：get()/post()/pull()/delete()
+      3. 都有默认配置和拦截器的属性：default/interceptor
+   2. 不同：
+      1. 默认匹配的值很可能不一样
+      2. instance没有axios后面添加的一些方法：create()/CancelToken()/all()
+
+3. 流程图
+
+   ![流程图](./流程图.png)
+
+4. 整体流程
+
+   1. request(config) ==> dispatchRequest(config) ==> xhrAdapter(config)
+
+   2. request(config)：
+
+      将请求拦截器/dispatchRequest()/响应拦截器 通过promise链串联起来，返回promise
+
+   3. dispatchRequest(config)
+
+      转换请求数据 ==> 调用xhrAdapter()发送请求 ==> 请求返回后转换响应数据，返回promis4
+
+   4. xhrAdapter(config)：
+
+      创建XHR对象，根据config进行相关设置，发送特定请求，并接收响应数据，返回promise
+
+5. axios的请求/响应拦截器工作流程
+
+   ![axios的请求/响应拦截器工作流程](.\img\axios的请求和响应拦截器工作流程.png)
    
+   axios利用promise链的特点，准备一个 chain数组 预先存入 dispathRequest, undefined，在请求拦截器中每次取出一个 fulfilled和rejected 函数 放到 chain 首部，在响应拦截器中每次取出一个 fulfilled和rejected 函数放到chain 尾部，所以导致请求拦截器后申明的先被调用。
+   
+   chain: [dispatchRequest, undefined]
+   interceptors.request：[{fulfilled1, rejected1}, {fulfilled2, rejected2}]
+   interceptors.response：[{fulfilledA, rejectedA}, {fulfilledB, rejectedB}]
+   ===========>
+   chain：[
+   fulfilled2, rejected2, fulfilled1, rejected1,
+   dispatchRequest, undefined,
+   fulfilledA, rejectedA, fulfilledB, rejectedB
+   ]
 
+6. 如何取消未完成的请求？
+   1. 当配置了cancelToken 对象时，保存cancel函数
+      1. 创建一个用于将来中断请求的cancelPromise
+      2. 并定义了一个用于中断请求的cancel函数
+      3. 将cancel函数传递出来
+   2. 调用cancel()取消请求
+      1. 执行cancel函数，传入错误信息message
+      2. 内部会让cancelPromise变为成功，且成功的值为一个Cancel对象
+      3. 在cancelPromise的成功回调中中断请求，并让发请求的promise失败，失败的reason为Cancel对象
