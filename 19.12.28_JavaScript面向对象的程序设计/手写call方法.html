@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>手写call方法.html</title>
+</head>
+<body>
+  <script type="text/javascript">
+    var obj = {
+      name: "AimerFan"
+    };
+
+    var name = "AimerFan Global";
+
+    function sayName (a) {
+      console.log("hello " + this.name);
+      console.log(a);
+    }
+
+    // sayName();
+
+    function _call (context, ...args) {
+      // 如果没有传入context 默认是window对象
+      context = context || window;
+      // 给当前传入的上下文生成唯一的标识
+      var fn = unique(context);
+      // 把要调用的方法存到传入的上下文中
+      context[fn] = this;
+      // 通过传入的上下文调用方法 这样就改变了传入函数中的函数作用域（this的指向）
+      context[fn](...args);
+      // 删除自定义的函数
+      delete context[fn];
+
+      function unique(obj) {
+        var u = (Math.random() * Number.MAX_VALUE);
+        if (obj.hasOwnProperty(u)) {
+          return Symbol(u);
+        } else {
+          return u;
+        }
+      }
+    }
+
+    // apply 方法和call方法类似，只是传参的方式不同
+    function _apply (context, args) {
+      this._call(context, ...args);
+    }
+
+    // bind 方法返回一个函数，函数的作用域（this）指向用户希望的上下文
+    function _bind (context, ...args) {
+      var self = this;
+      return function() {
+        self._call(context, ...args);
+      }
+    }
+
+    Function.prototype._call = _call;
+    Function.prototype._apply = _apply;
+    Function.prototype._bind = _bind;
+
+    // sayName.call(obj);
+    // sayName._call(obj, "aaaaa");
+    // sayName._apply(obj, ["aaaaa"]);
+
+    var sayNameApply = sayName._bind(obj, "AimerFan");
+    sayNameApply();
+    console.dir(sayNameApply);
+
+  </script>
+</body>
+</html>

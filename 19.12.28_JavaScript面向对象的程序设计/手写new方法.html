@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>手写new方法.html</title>
+</head>
+<body>
+  <script type="text/javascript">
+    // 使用new操作符调用构造函数实际上会经历以下4个步骤：
+    // 1. 创建一个新对象；
+    // 2. 将构造函数的作用域赋给新对象（因此this就指向了这个新对象）
+    // 3. 执行构造函数中的代码（为这个新对象添加新属性）
+    // 4. 返回新对象
+
+
+    function _new (Fun, ...args) {
+      var obj = new Object();
+      Fun.call(obj, ...args);
+      return obj;
+    }
+
+    function Person (name, age, job) {
+      console.log("this", this);
+      this.name = name;
+      this.age = age;
+      this.job = job;
+    }
+
+    var person = _new(Person, "AimerFan", 18, "Software Enginner");
+
+    console.log(person);
+  </script>
+</body>
+</html>

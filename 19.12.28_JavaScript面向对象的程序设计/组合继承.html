@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>组合继承.html</title>
+</head>
+<body>
+  <script type="text/javascript">
+    // 组合继承（原型链继承，构造函数继承）
+    // 原型链继承原型属性和方法   构造函数实现实例属性的继承
+    // 通过在子类中调用父类的call给子类添加夫类的属性和方法
+
+    function SuperClass (name) {
+      this.name = name;
+      this.colors = ["red", "green", "blue"];
+    }
+    SuperClass.prototype.sayHello = function () {
+      console.log("hello");
+    };
+
+    function SubClass (name, age) {
+      SuperClass.call(this, name);
+      this.age = age;
+    }
+
+    var subInstance = new SubClass("AimerFan", 18);
+
+    console.log(subInstance); // => SubClass {name: "AimerFan", colors: Array(3), age: 18}
+    console.log(subInstance instanceof SubClass); // => true
+    console.log(subInstance instanceof SuperClass); // => false
+
+    // 这种方法生成的实例只是拥有父类和子类的属性和方法
+    // 本质上生成的实例只是子类的实例
+    // 而子类和父类之间没有继承关系（子类的原型不是父类的实例）
+
+  </script>
+</body>
+</html>
