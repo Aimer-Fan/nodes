@@ -1,13 +1,14 @@
-var client = function () {
+(function (window) {
   // 呈现引擎
   var engine = {
     ie: 0,
     gecko: 0,
+    webkit: 0,
     khtml: 0,
     opera: 0,
 
     // 完整版本号
-    ver = null
+    ver: null
   };
 
   // 浏览器
@@ -51,7 +52,7 @@ var client = function () {
     engine.opera = borwser.opera = parseFloat(engine.ver);
   } else if (/AppleWebKit\/(\S+)/.test(ua)) {
     engine.ver = RegExp["$1"];
-    borwser.webkit = parseFloat(engine.ver);
+    engine.webkit = parseFloat(engine.ver);
 
     // 确定是Chrome还是Safari
     if (/Chrome\/(\S+)/.test(ua)) {
@@ -165,10 +166,16 @@ var client = function () {
   system.wii = ua.indexOf("Wii") > -1;
   system.ps = /playstation/i.test(ua);
 
-  return {
+  // return {
+  //   engine: engine,
+  //   borwser: borwser,
+  //   system: system
+  // };
+
+  window.client = {
     engine: engine,
     borwser: borwser,
     system: system
   };
 
-}();
+})(window);
