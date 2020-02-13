@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>快速排序</title>
+</head>
+
+<body>
+  <script type="text/javascript">
+    let arr = [9, 8, 7, 6, 5, 4, 10, 11, 45, 4, 15]
+
+    /**
+     * 快速排序算法
+     * 1. 选取当中的一个（最左边的）为标识位（pivot）
+     * 2. 右侧指针(right)从右向左先找出第一个比标识位小的放到左边（left指向的内存地址）
+     * 3. 左侧指针(left) 从左往右先找出第一个比标识位大的放到右边（right指向的内存地址）
+     * 4. 依此重复2, 3步骤直到左测指针(left)和右侧指针(right)指向同一个内存地址
+     *    这样标识位左边的全部比标识位小，右边的全部比标识位大。
+     * 5. 依此排序左边的数组和右边的数组，直到数组的元素只有一个就默认完成了排序
+    */
+    function quickSort(arr, left, right) {
+
+      if (left >= right) return
+      let pivot = arr[left]
+      let L = left
+      let R = right
+      while (left !== right) {
+        while (right > left && arr[right] >= pivot) {
+          right--
+        }
+        if (left < right) {
+          arr[left] = arr[right]
+        }
+
+        while (left < right && arr[left] <= pivot) {
+          left++
+        }
+        if (left < right) {
+          arr[right] = arr[left]
+        }
+        if (left === right) {
+          arr[left] = pivot
+        }
+      }
+
+      quickSort(arr, L, left - 1)
+      quickSort(arr, right + 1, R)
+
+    }
+
+    quickSort(arr, 0, arr.length - 1)
+    console.log(arr)
+  </script>
+</body>
+
+</html>
