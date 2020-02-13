@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>原型式继承.html</title>
+</head>
+<body>
+  <script type="text/javascript">
+    // 在原型式继承没有构造函数 而是通过已有的对象创建新对象
+    // Object.create() 是原型式继承的规范方法
+
+    function prototypeInherit (superInstance) {
+      var subInstance = new Object();
+      subInstance.__proto__ = superInstance
+      return subInstance;
+    }
+
+    var superInstance = {
+      name: "AimerFan",
+      age: 18
+    }
+
+    var subInstance = prototypeInherit(superInstance);
+    subInstance.name = "subAimerFan";
+
+    console.log(subInstance);
+
+
+    /*
+      F {
+        name: "subAimerFan",
+        __proto__: { name: "AimerFan", age: 18 }
+      }
+    */
+
+  </script>
+</body>
+</html>
